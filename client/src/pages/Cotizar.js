@@ -62,7 +62,8 @@ class cotizar extends Component {
       ]},
     producto: "",
     seleccion: [],
-    synopsis: ""
+    listo: false
+  
   };
 
   componentDidMount() {
@@ -83,17 +84,43 @@ class cotizar extends Component {
     //   .catch(err => console.log(err));
   };
 
+  addCart = () => {
+    let carrito = this.state.Carrito;
+    let porducto = {
+      tipo: this.state.producto,
+      seleccion: this.state.seleccion
+    }
+    carrito.push(porducto)
+    this.setState({
+      producto: "",
+      Carrito: carrito,
+      listo: false,
+      seleccion: []      
+    })
+  }
   cambio = grupo => {
     console.log(grupo);
     this.setState({
       producto: grupo,
+      listo: false,
       seleccion: []      
     })
   }
   cambiobtn = select => {
-    console.log(select);
     const sel = this.state.seleccion;
-    sel[select.lugar] = select.select
+    const leng = this.state[this.state.producto].preguntas.length;
+    sel[select.lugar] = select.select;
+    let binArr = []
+    for(var i = 0; i < leng; i++){
+      if(sel[i] !== undefined){
+        binArr[i] = 1
+      }else{ 
+        binArr[i] = 0}
+    };
+    console.log(binArr)
+    if(!binArr.includes(0)){
+      this.setState({listo: true})
+    }
     this.setState({
       seleccion: sel
     })
@@ -127,7 +154,8 @@ class cotizar extends Component {
             <Jumbotron 
               onClick={() => this.cambio("mesa")}>
               <img className="classImg" src={require("../static/mk_I.JPG")}></img>
-              <FormBtn onClick={() => this.cambio("mesa")}>Mesa de Centro</FormBtn>
+              <FormBtn onClick={() => this.cambio("mesa")}>
+                Mesa de Centro</FormBtn>
             </Jumbotron>
           </Col>
           <Col size="md-3">
@@ -147,6 +175,11 @@ class cotizar extends Component {
               <img className="classImg" src={require("../static/lamp.JPG")}></img>
               <FormBtn onClick={() => this.cambio("accesorios")}>Accesorios</FormBtn>
             </Jumbotron>
+          </Col>
+          <Col size="md-4">
+            {this.state.listo?
+            <Button onClick={this.addCart}>Add to Cart</Button>
+            : ""}
           </Col>
 
           <Col size="md-12">
@@ -272,6 +305,8 @@ class cotizar extends Component {
 
           </Col>
           <Col size="md-6 sm-12">
+
+
             {/* {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
