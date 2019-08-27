@@ -61,6 +61,7 @@ class cotizar extends Component {
         Num: 2}
       ]},
     producto: "",
+    seleccion: [],
     synopsis: ""
   };
 
@@ -85,7 +86,16 @@ class cotizar extends Component {
   cambio = grupo => {
     console.log(grupo);
     this.setState({
-      producto: grupo
+      producto: grupo,
+      seleccion: []      
+    })
+  }
+  cambiobtn = select => {
+    console.log(select);
+    const sel = this.state.seleccion;
+    sel[select.lugar] = select.select
+    this.setState({
+      seleccion: sel
     })
   }
 
@@ -129,7 +139,7 @@ class cotizar extends Component {
           <Col size="md-3">
             <Jumbotron>
               <img className="classImg" src={require("../static/mk_II.JPG")}></img>
-              <FormBtn onClick={() => this.cambio("mesaAdd")}>Mesas con additamentos</FormBtn>
+              <FormBtn onClick={() => this.cambio("mesaAdd")}>Mesas con aditamentos</FormBtn>
             </Jumbotron>
           </Col>
           <Col size="md-3">
@@ -151,12 +161,17 @@ class cotizar extends Component {
                     <Card>
                       <Accordion.Toggle as={Card.Header} eventKey={pregunta.Num}>
                         {pregunta.titulo}
+                        <span className="badge badgeSecondary">{this.state.seleccion[pregunta.Num]}</span>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey={pregunta.Num}>
                         <Card.Body>
                           <ButtonGroup size="lg" vertical>
                             {pregunta.opciones.map(opcion => 
-                              <Button>{opcion}</Button>
+                              <Button
+                              onClick={() => 
+                                this.cambiobtn({select: opcion, lugar: pregunta.Num})}
+                              >
+                              {opcion}</Button>
                             )}
                           </ButtonGroup>
                         {pregunta.opciones}
@@ -175,12 +190,17 @@ class cotizar extends Component {
                     <Card>
                       <Accordion.Toggle as={Card.Header} eventKey={pregunta.Num}>
                         {pregunta.titulo}
+                        <span className="badge badgeSecondary">{this.state.seleccion[pregunta.Num]}</span>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey={pregunta.Num}>
                         <Card.Body>
                           <ButtonGroup size="lg" vertical>
                             {pregunta.opciones.map(opcion => 
-                              <Button>{opcion}</Button>
+                              <Button
+                              onClick={() => 
+                                this.cambiobtn({select: opcion, lugar: pregunta.Num})}
+                              >
+                              {opcion}</Button>
                             )}
                           </ButtonGroup>
                         {pregunta.opciones}
@@ -198,12 +218,17 @@ class cotizar extends Component {
                     <Card>
                       <Accordion.Toggle as={Card.Header} eventKey={pregunta.Num}>
                         {pregunta.titulo}
+                        <span className="badge badgeSecondary">{this.state.seleccion[pregunta.Num]}</span>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey={pregunta.Num}>
                         <Card.Body>
                           <ButtonGroup size="lg" vertical>
                             {pregunta.opciones.map(opcion => 
-                              <Button>{opcion}</Button>
+                              <Button
+                              onClick={() => 
+                                this.cambiobtn({select: opcion, lugar: pregunta.Num})}
+                              >
+                              {opcion}</Button>
                             )}
                           </ButtonGroup>
                         {pregunta.opciones}
@@ -221,15 +246,20 @@ class cotizar extends Component {
                     <Card>
                       <Accordion.Toggle as={Card.Header} eventKey={pregunta.Num}>
                         {pregunta.titulo}
+                        <span className="badge badgeSecondary">{this.state.seleccion[pregunta.Num]}</span>
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey={pregunta.Num}>
                         <Card.Body>
                           <ButtonGroup size="lg" vertical>
                             {pregunta.opciones.map(opcion => 
-                              <Button>{opcion}</Button>
+                              <Button
+                              onClick={() => 
+                                this.cambiobtn({select: opcion, lugar: pregunta.Num})}
+                              >                              
+                              {opcion}</Button>
                             )}
                           </ButtonGroup>
-                        {pregunta.opciones}
+                              
                         
                         </Card.Body>
                       </Accordion.Collapse>
