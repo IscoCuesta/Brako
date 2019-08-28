@@ -73,9 +73,9 @@ class cotizar extends Component {
   }
 
   loadCart = () => {
-    let actual = JSON.parse(localStorage.getItem("BCC"))
+    let actual = localStorage.getItem("BCC");
     console.log(actual);
-    if(actual === null){
+    if(actual === null || typeof(actual) !== Array){
       actual = []
     }
     this.setState({
@@ -120,7 +120,6 @@ class cotizar extends Component {
       }else{ 
         binArr[i] = 0}
     };
-    console.log(binArr)
     if(!binArr.includes(0)){
       this.setState({listo: true})
     }
@@ -140,26 +139,26 @@ class cotizar extends Component {
           <Col size="md-3">
             <Jumbotron 
               onClick={() => this.cambio("mesa")}>
-              <img className="classImg" src={require("../static/mk_I.JPG")}></img>
+              <img className="classImg" src={require("../static/mk_I.JPG")} alt="mk-I"></img>
               <FormBtn onClick={() => this.cambio("mesa")}>
                 Mesa de Centro</FormBtn>
             </Jumbotron>
           </Col>
           <Col size="md-3">
             <Jumbotron>
-              <img className="classImg" src={require("../static/banca.JPG")}></img>
+              <img className="classImg" src={require("../static/banca.JPG")} alt="banca"></img>
               <FormBtn onClick={() => this.cambio("banca")}>Banca</FormBtn>
             </Jumbotron>
           </Col>
           <Col size="md-3">
             <Jumbotron>
-              <img className="classImg" src={require("../static/mk_II.JPG")}></img>
+              <img className="classImg" src={require("../static/mk_II.JPG")} alt="mk-II"></img>
               <FormBtn onClick={() => this.cambio("mesaAdd")}>Mesas con aditamentos</FormBtn>
             </Jumbotron>
           </Col>
           <Col size="md-3">
             <Jumbotron>
-              <img className="classImg" src={require("../static/lamp.JPG")}></img>
+              <img className="classImg" src={require("../static/lamp.JPG")} alt="lamp"></img>
               <FormBtn onClick={() => this.cambio("accesorios")}>Accesorios</FormBtn>
             </Jumbotron>
           </Col>
