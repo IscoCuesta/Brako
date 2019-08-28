@@ -2,20 +2,20 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Books from "./pages/Books";
 import Cotizar from "./pages/Cotizar";
+import Carrito from "./pages/Carrito";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
         <Switch>
           <Route exact path="/" component={Books} />
           <Route exact path="/books" component={Books} />
           <Route exact path="/books/:id" component={Detail} />
-          <Route exact path="/Cotizar" component={Cotizar} />
+          <Route exact path="/cotizar" component={Cotizar} />
+          <Route exact path="/carrito" component={Carrito} />
           <Route component={NoMatch} />
         </Switch>
       </div>

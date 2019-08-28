@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 // import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/API";
+import Nav from "../components/Nav";
+
 import "./cotizarStyle.css";
 // import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
@@ -67,27 +68,27 @@ class cotizar extends Component {
   };
 
   componentDidMount() {
-    // this.loadBooks();
+    this.loadCart();
+    
   }
 
-  loadBooks = () => {
-    // API.getBooks()
-    //   .then(res =>
-    //     this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-    //   )
-    //   .catch(err => console.log(err));
-  };
-
-  deleteBook = id => {
-    // API.deleteBook(id)
-    //   .then(res => this.loadBooks())
-    //   .catch(err => console.log(err));
-  };
+  loadCart = () => {
+    let actual = JSON.parse(localStorage.getItem("BCC"))
+    console.log(actual);
+    if(actual === null){
+      actual = []
+    }
+    this.setState({
+      Carrito: actual
+    })
+  }
 
   addCart = () => {
     let carrito = this.state.Carrito;
+    let d = Date.now()
     let porducto = {
       tipo: this.state.producto,
+      Num: d,
       seleccion: this.state.seleccion
     }
     carrito.push(porducto)
@@ -96,7 +97,9 @@ class cotizar extends Component {
       Carrito: carrito,
       listo: false,
       seleccion: []      
-    })
+    });
+
+    localStorage.setItem("BCC", JSON.stringify(this.state.Carrito))
   }
   cambio = grupo => {
     console.log(grupo);
@@ -126,29 +129,13 @@ class cotizar extends Component {
     })
   }
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
 
   render() {
     return (
+      <div>
+        <Nav carrito={this.state.Carrito.length} />
       <Container fluid>
+
         <Row>
           <Col size="md-3">
             <Jumbotron 
@@ -326,6 +313,7 @@ class cotizar extends Component {
           </Col>
         </Row>
       </Container>
+      </div>
     );
   }
 }
